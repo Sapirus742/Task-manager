@@ -117,6 +117,8 @@ export enum Role {
     createdAt: Date;
   
     author: SecuredUser;
+
+    assignee?: any;
   
   };
   

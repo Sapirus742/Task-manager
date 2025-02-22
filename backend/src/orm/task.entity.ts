@@ -94,7 +94,7 @@ export class Task {
 
       status: this.status,
 
-      //assignee: this.author.getSecuredDto(), // +++
+      assignee: this.author.getSecuredDto(), // +++
 
       author: this.author.getSecuredDto(),
 

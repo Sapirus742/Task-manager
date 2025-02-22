@@ -46,7 +46,7 @@ export class TasksService {
 
     newTask.status = createTaskDto.status;
 
-    //newTask.author = authorUser;
+    newTask.author = authorUser;
 
  
 

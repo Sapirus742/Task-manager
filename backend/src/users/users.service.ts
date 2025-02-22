@@ -34,7 +34,7 @@ export class UsersService {
 
  
 
-  async findOneById(id: number): Promise<User | null> {
+  async findOneById(id: number): Promise<User | any> {
 
     return this.userRepository.findOneBy({ id });
 
