@@ -61,10 +61,10 @@
   import { ref } from 'vue';
   
   import SideMenu from 'components/SideMenu.vue'
+
+  import { storeToRefs } from 'pinia';
   
   import { useMainStore } from 'src/stores/main-store';
-  
-  import { storeToRefs } from 'pinia';
   
   import * as api from '../api/auth.api';
   

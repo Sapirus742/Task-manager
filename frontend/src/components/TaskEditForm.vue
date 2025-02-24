@@ -272,30 +272,21 @@ if (props.task) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-const filterFn = async (val: string, update: any) => {
+type UpdateFunction = (callback: () => void) => void;
 
+const filterFn = async (val: string, update: UpdateFunction) => {
   if (usersDict.value.length > 0) {
-
-    // already loaded
-
-    update();
-
+    update(() => {
+      // Здесь можно добавить логику, если нужно
+    });
     return;
-
   }
-
- 
 
   const users = await userApi.getAll();
 
- 
-
   update(() => {
-
     usersDict.value = users;
-
   });
-
 };
 
  
