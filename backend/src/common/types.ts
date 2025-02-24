@@ -19,6 +19,7 @@ export enum Role {
   }
   
   export interface LoginResponseDto {
+    userId: number;
   
     access_token: string;
   
