@@ -2,7 +2,17 @@ import { defineStore } from 'pinia';
 
 import { reactive, toRefs } from 'vue';
 
-import { LoginResponseDto, Role } from '../../../backend/src/common/types';
+import {
+
+  LoginResponseDto,
+
+  Role,
+
+  SecuredUser,
+
+  UserAccountStatus,
+
+} from '../../../backend/src/common/types';
 
  
 
@@ -20,11 +30,15 @@ export const useMainStore = defineStore('main', () => {
 
     roles: [] as Role[],
 
+    userStatus: UserAccountStatus,
+
   });
 
  
 
   const initAppState = (appState: LoginResponseDto) => {
+
+    state.userId = appState.userId;
 
     state.username = appState.username;
 
@@ -33,6 +47,28 @@ export const useMainStore = defineStore('main', () => {
     state.lastname = appState.lastname;
 
     state.roles = appState.roles;
+
+  };
+
+ 
+
+  const getCurrentUser = (): SecuredUser => {
+
+    return {
+
+      id: state.userId,
+
+      name: state.username,
+
+      firstname: state.firstname,
+
+      lastname: state.lastname,
+
+      roles: state.roles,
+
+      status: UserAccountStatus.active,
+
+    };
 
   };
 
@@ -53,6 +89,8 @@ export const useMainStore = defineStore('main', () => {
     isAdmin,
 
     isUser,
+
+    getCurrentUser,
 
   };
 

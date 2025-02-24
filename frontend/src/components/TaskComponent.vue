@@ -1,52 +1,66 @@
 <template>
 
-    <q-card class="my-card" flat bordered>
-  
-      <q-card-section horozontal>
-  
-        <q-card-section class="q-pt-xs">
-  
-          <div class="text-h6">{{ $props.value.title }}</div>
-  
-        </q-card-section>
-  
-        <q-card-section class="q-pa-none">
-  
-          Создана: {{ creationDate }}</q-card-section
-  
-        >
-  
-        <q-card-section class="q-pa-none">
-  
-          Автор:
-  
-          {{
-  
-            `${$props.value.author.firstname}
-  
-          ${$props.value.author.lastname}`
-  
-          }}</q-card-section
-  
-        >
-  
+  <q-card class="my-card" flat bordered>
+
+    <q-card-section horozontal>
+
+      <q-card-section class="q-pt-xs">
+
+        <div class="text-h6">{{ $props.value.title }}</div>
+
       </q-card-section>
-  
-   
-  
-      <q-separator />
-  
-   
-  
-      <q-card-actions>
-  
-        <q-btn flat icon="edit" label="Изменить" @click="onChangeClick" />
-  
-      </q-card-actions>
-  
-    </q-card>
-  
-  </template>
+
+      <q-card-section class="q-pa-none">
+
+        Создана: {{ creationDate }}</q-card-section
+
+      >
+
+      <q-card-section class="q-pa-none">
+
+        Исполнитель:
+
+        {{
+
+          `${$props.value.assignee.firstname}
+
+        ${$props.value.assignee.lastname}`
+
+        }}</q-card-section
+
+      >
+
+      <q-card-section class="q-pa-none">
+
+        Автор:
+
+        {{
+
+          `${$props.value.author.firstname}
+
+        ${$props.value.author.lastname}`
+
+        }}</q-card-section
+
+      >
+
+    </q-card-section>
+
+ 
+
+    <q-separator />
+
+ 
+
+    <q-card-actions>
+
+      <q-btn flat icon="edit" label="Изменить" @click="onChangeClick" />
+
+    </q-card-actions>
+
+  </q-card>
+
+</template>
   
    
   

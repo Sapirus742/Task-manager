@@ -38,6 +38,12 @@ export class TasksService {
 
     const authorUser = await this.usersService.findOneById(user.userId);
 
+    const assigneeUser = await this.usersService.findOneById(
+
+      createTaskDto.assignee.id,
+
+    );
+
  
 
     const newTask = new Task();
@@ -47,6 +53,8 @@ export class TasksService {
     newTask.status = createTaskDto.status;
 
     newTask.author = authorUser;
+
+    newTask.assignee = assigneeUser;
 
  
 
@@ -84,11 +92,19 @@ export class TasksService {
 
     const existedTask = await this.findOne(id);
 
+    const assigneeUser = await this.usersService.findOneById(
+
+      updateTaskDto.assignee.id,
+
+    );
+
     if (existedTask) {
 
       existedTask.title = updateTaskDto.title;
 
       existedTask.status = updateTaskDto.status;
+
+      existedTask.assignee = assigneeUser;
 
  
 

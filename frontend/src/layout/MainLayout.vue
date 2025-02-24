@@ -62,7 +62,7 @@
   
   import SideMenu from 'components/SideMenu.vue'
   
-  import { useMainStore } from 'src/storage/main-store';
+  import { useMainStore } from 'src/stores/main-store';
   
   import { storeToRefs } from 'pinia';
   
