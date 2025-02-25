@@ -106,10 +106,9 @@
   
     } catch {
   
-      console.log('Signup failed');
+      console.error('Signup failed:', Error);
   
     }
-  
    
   
     if (response && response.success) {

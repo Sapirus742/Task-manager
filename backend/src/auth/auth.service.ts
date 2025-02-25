@@ -92,6 +92,8 @@ export class AuthService {
 
       roles: user.roles,
 
+      userId: user.id,
+
     };
 
   }

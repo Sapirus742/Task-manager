@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 import { reactive, toRefs } from 'vue';
 
-import { LoginResponseDto, Role } from '../../../backend/src/common/types';
+import { LoginResponseDto, Role } from '../common/types';
 
  
 
