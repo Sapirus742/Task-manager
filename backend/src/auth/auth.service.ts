@@ -74,8 +74,6 @@ export class AuthService {
 
   }
 
- 
-
   async login(user: SecuredUser): Promise<LoginResponseDto> {
 
     const payload = { username: user.name, sub: user.id, roles: user.roles };
