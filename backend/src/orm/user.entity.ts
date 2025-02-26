@@ -1,107 +1,96 @@
 import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  ManyToOne,
+  OneToMany,
+  UpdateDateColumn,
+  VersionColumn,
+} from 'typeorm';   
 
-    Entity,
+import { Team } from './team.entity';
+
+/*
+export type UserRoleType = "admin" | "editor" | "ghost";
+@Column({type: "enum",
+  enum: ["admin", "editor", "ghost"],
+  default: "ghost"})
+competence: UserRoleType;
+*/
+
+import { Role, UserAccountStatus, SecuredUser, Competence } from 'src/common/types'; 
+import { Idea } from './idea.entity';
+import { Portfolio } from './portfolio.entity';
+import { Comments } from './comment.entity';
+import { Project } from './project.entity';
   
-    Column,
+@Entity()
+export class User {
   
-    PrimaryGeneratedColumn,
+  @PrimaryGeneratedColumn()
+  id: number;
   
-    CreateDateColumn,
+  @Column()
+  email: string;
   
-    UpdateDateColumn,
+  @Column()
+  passwordHash: string;
   
-    VersionColumn,
+  @Column({ default: '' })
+  firstname: string;
   
-  } from 'typeorm';
+  @Column({ default: '' })
+  lastname: string;
   
-   
+  @Column({ default: '' })
+  group: string;
+
+  @Column({ default: '' })
+  telephone: string;
+
+  @Column({ type: 'varchar', default: [Role.user], array: true })
+  roles: Role[];
   
-  import { Role, UserAccountStatus, SecuredUser } from 'src/common/types';
+  @Column({ default: UserAccountStatus.pending })
+  status: UserAccountStatus;
+
+  @Column({ type: 'varchar', array: true, default: '{}' })
+  competence: Competence[];
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt!: Date;
+
+  @OneToMany(() => Portfolio, (portfolio) => portfolio.user)
+  portfolio: Portfolio[];
+
+  @OneToMany(() => Idea, (idea) => idea.initiator)
+  idea_initiator: Idea[];
+
+  @OneToMany(() => Idea, (idea) => idea.customer)
+  idea_customer: Idea[];
+
+  @OneToMany(() => Project, (project) => project.initiator)
+  project_initiator: Project[];
+
+  @OneToMany(() => Project, (project) => project.customer)
+  project_customer: Project[];
+
+  @OneToMany(() => Comments, (comment) => comment.users)
+  comment: Comments[];
+
+  @ManyToOne(() => Team, (team) => team.user, { eager: true, onDelete: 'SET NULL' })
+  team: Team;
   
-   
-  
-  @Entity()
-  
-  export class User {
-  
-    @PrimaryGeneratedColumn()
-  
-    id: number;
-  
-   
-  
-    @Column()
-  
-    name: string;
-  
-   
-  
-    @Column()
-  
-    passwordHash: string;
-  
-   
-  
-    @Column({ default: '' })
-  
-    firstname: string;
-  
-   
-  
-    @Column({ default: '' })
-  
-    lastname: string;
-  
-   
-  
-    @Column({ type: 'varchar', default: [Role.user], array: true })
-  
-    roles: Role[];
-  
-   
-  
-    @Column({ default: UserAccountStatus.pending })
-  
-    status: UserAccountStatus;
-  
-   
-  
-    @CreateDateColumn({ name: 'created_at' })
-  
-    createdAt!: Date;
-  
-   
-  
-    @UpdateDateColumn({ name: 'updated_at' })
-  
-    UpdatedAt!: Date;
-  
-   
-  
-    @VersionColumn()
-  
-    version!: number;
-  
-   
-  
-    getSecuredDto(): SecuredUser {
-  
-      return {
-  
-        id: this.id,
-  
-        name: this.name,
-  
-        firstname: this.firstname,
-  
-        lastname: this.lastname,
-  
-        roles: this.roles,
-  
-        status: this.status,
-  
-      };
-  
-    }
-  
+  getSecuredDto(): SecuredUser {
+    return {
+      id: this.id,
+      email: this.email,
+      firstname: this.firstname,
+      lastname: this.lastname,
+      roles: this.roles,
+      status: this.status,
+    };
   }
+}
+

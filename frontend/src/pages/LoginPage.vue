@@ -130,7 +130,7 @@
   
   const onSignUp = () => {
   
-    router.push({ path: '\signup' })
+    router.push({ path: '/signup' })
   
   }
   

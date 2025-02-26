@@ -8,7 +8,7 @@ export default async ({ app }) => {
 
 // Создаем экземпляр axios с базовым URL
 const api = axios.create({
-  baseURL: 'https://api.example.com', // Замените на ваш API
+  baseURL: 'http://localhost:9000/', // Замените на ваш API
   timeout: 10000, // Устанавливаем таймаут в 10 секунд
 })
 
