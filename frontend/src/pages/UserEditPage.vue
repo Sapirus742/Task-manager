@@ -118,7 +118,7 @@
   
       lastname.value = response.lastname;
   
-      name.value = response.name;
+      name.value = response.email;
   
       roles.value = response.roles;
   

@@ -58,7 +58,7 @@ export const useMainStore = defineStore('main', () => {
 
       id: state.userId,
 
-      name: state.username,
+      email: state.username,
 
       firstname: state.firstname,
 
