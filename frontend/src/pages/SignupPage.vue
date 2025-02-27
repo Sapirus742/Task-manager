@@ -1,58 +1,68 @@
 <template>
+  <q-page class="row items-center justify-evenly">
+    <q-card flat bordered class="my-card" style="width: 400px; padding: 20px;">
+      <q-card-section>
+        <div class="text-h5 text-center q-mb-md">Регистрация</div>
+        <div class="text-caption text-center q-mb-md">
+          Введите данные для регистрации
+        </div>
+      </q-card-section>
 
-    <q-page class="row items-center justify-evenly">
-  
-      <q-card flat bordered class="my-card">
-  
-        <q-card-section>
-  
-          <div class="text-h6 text-center">Регистрация нового пользователя</div>
-  
-        </q-card-section>
-  
-   
-  
-        <q-card-section class="q-pt-none">
-  
-          <q-input v-model="login" label="Логин" dense />
-  
-        </q-card-section>
-  
-        <q-card-section class="q-pt-none">
-  
-          <q-input type="password" v-model="password" label="Пароль" dense />
-  
-        </q-card-section>
-  
-        <q-card-section class="q-pt-none">
-  
-          <q-input v-model="firstname" label="Имя" dense />
-  
-        </q-card-section>
-  
-        <q-card-section class="q-pt-none">
-  
-          <q-input v-model="lastname" label="Фамилия" dense />
-  
-        </q-card-section>
-  
-   
-  
-        <q-card-actions align="around">
-  
-          <q-btn color="primary" @click="onSignUp">Регистрация</q-btn>
-  
-          <q-btn color="secondary" flat @click="onReturn">Назад</q-btn>
-  
-        </q-card-actions>
-  
-   
-  
-      </q-card>
-  
-    </q-page>
-  
-  </template>
+      <q-card-section class="q-pt-none">
+        <q-input
+          v-model="login"
+          label="Логин"
+          dense
+          outlined
+          class="q-mb-md"
+          placeholder="almanum_uxul@std.tyulu.ru"
+        />
+        <q-input
+          v-model="firstname"
+          label="Имя"
+          dense
+          outlined
+          class="q-mb-md"
+        />
+        <q-input
+          v-model="lastname"
+          label="Фамилия"
+          dense
+          outlined
+          class="q-mb-md"
+        />
+        <q-input
+          type="password"
+          v-model="password"
+          label="Пароль"
+          dense
+          outlined
+          class="q-mb-md"
+          placeholder="**********"
+        />
+      </q-card-section>
+
+      <q-card-actions align="center">
+        <q-btn
+          color="primary"
+          label="Зарегистрироваться"
+          @click="onSignUp"
+          class="full-width q-mb-md"
+        />
+      </q-card-actions>
+
+      <q-card-section class="text-center">
+        <q-btn
+          color="secondary"
+          label="Назад"
+          flat
+          @click="onReturn"
+          class="full-width"
+        />
+      </q-card-section>
+    </q-card>
+  </q-page>
+</template>
   
    
   
@@ -148,7 +158,15 @@
     }
   
   }
-  
-   
-  
   </script>
+  
+  <style scoped>
+  .my-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  </style>
