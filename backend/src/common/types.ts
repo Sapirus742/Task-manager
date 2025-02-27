@@ -45,13 +45,12 @@ export enum Competence {
 }
   
   export interface LoginResponseDto {
-    userId: number;
     access_token: string;
     username: string;
     firstname: string;
     lastname: string;
     roles: Role[];
-
+    userId: number;
   }
   export interface SignUpRequestDto {
     username: string;
