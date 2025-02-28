@@ -63,110 +63,66 @@
     </q-card>
   </q-page>
 </template>
-  
-   
-  
-  <script setup lang="ts">
-  
-  import { useQuasar } from 'quasar';
-  
-  import * as api from 'src/api/auth.api';
-  
-  import { ref } from 'vue';
-  
-  import { useRouter } from 'vue-router';
-  
-   
-  
-  const router = useRouter();
-  
-   
-  
-  const $q = useQuasar();
-  
-   
-  
-  const login = ref('');
-  
-  const password = ref('');
-  
-  const firstname = ref('');
-  
-  const lastname = ref('');
-  
-   
-  
-  const onReturn = () => {
-  
-    router.push({ path: '\login' })
-  
+
+<script setup lang="ts">
+import { useQuasar } from 'quasar';
+import * as api from 'src/api/auth.api';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const $q = useQuasar();
+
+const login = ref('');
+const password = ref('');
+const firstname = ref('');
+const lastname = ref('');
+
+const onReturn = () => {
+  router.push({ path: '/login' });
+};
+
+const onSignUp = async () => {
+  let response;
+
+  try {
+    response = await api.signup({
+      username: login.value,
+      password: password.value,
+      firstname: firstname.value,
+      lastname: lastname.value,
+    });
+  } catch {
+    console.log('Signup failed');
   }
-  
-   
-  
-  const onSignUp = async () => {
-  
-    let response;
-  
-   
-  
-    try {
-  
-      response = await api.signup({ username: login.value, password: password.value, firstname: firstname.value, lastname: lastname.value });
-  
-    } catch {
-  
-      console.error('Signup failed:', Error);
-  
-    }
-   
-  
-    if (response && response.success) {
-  
-   
-  
-      $q.notify({
-  
-        message: 'Пользователь успешно создан',
-  
-        caption: 'Ожидайте активации пользователя администратором.',
-  
-        color: 'green',
-  
-        icon: 'verified'
-  
-      })
-  
-   
-  
-      router.push({ path: '/login' })
-  
-    } else {
-  
-      $q.notify({
-  
-        message: 'Создать пользователя не удалось',
-  
-        caption: 'Возможно, пользователь с таким логином уже существует. Попробуйте другой.',
-  
-        color: 'red',
-  
-        icon: 'error'
-  
-      })
-  
-    }
-  
+
+  if (response && response.success) {
+    $q.notify({
+      message: 'Пользователь успешно создан',
+      caption: 'Ожидайте активации пользователя администратором.',
+      color: 'green',
+      icon: 'verified',
+    });
+
+    router.push({ path: '/login' });
+  } else {
+    $q.notify({
+      message: 'Создать пользователя не удалось',
+      caption: 'Возможно, пользователь с таким логином уже существует. Попробуйте другой.',
+      color: 'red',
+      icon: 'error',
+    });
   }
-  </script>
-  
-  <style scoped>
-  .my-card {
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .full-width {
-    width: 100%;
-  }
-  </style>
+};
+</script>
+
+<style scoped>
+.my-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.full-width {
+  width: 100%;
+}
+</style>
