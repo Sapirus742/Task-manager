@@ -88,9 +88,17 @@
           <p><strong>Теги:</strong> {{ selectedProject.tags.join(', ') }}</p>
         </q-card-section>
 
-        <!-- Кнопка "Закрыть" в правом нижнем углу -->
+        <!-- Кнопка "Закрыть" и "Удалить" в правом нижнем углу -->
         <q-card-actions align="right" class="dialog-actions">
           <q-btn flat label="Закрыть" color="primary" @click="closeProjectDetailsDialog" />
+          <!-- Кнопка "Удалить" только для созданных проектов -->
+          <q-btn
+            v-if="selectedProject.isCustom"
+            flat
+            label="Удалить"
+            color="negative"
+            @click="deleteProject(selectedProject)"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -112,6 +120,7 @@ interface Project {
   requiredResources?: string;
   stack?: string;
   participantsCount?: number;
+  isCustom?: boolean; // Поле для определения, создан ли проект пользователем
 }
 
 const categories = ['Все категории', 'Набор открыт', 'Набор закрыт'];
@@ -129,7 +138,8 @@ const projects = ref<Project[]>([
     expectedResult: 'Повышение участия в голосовании',
     requiredResources: 'C#, Blazor, .NET 6.0, SQLite, Git, Docker',
     stack: 'C#, Blazor, .NET 6.0',
-    participantsCount: 5
+    participantsCount: 5,
+    isCustom: false // Предопределенный проект
   },
   {
     title: '#2 Создание личного кабинета работника',
@@ -142,7 +152,8 @@ const projects = ref<Project[]>([
     expectedResult: 'Упрощение учета',
     requiredResources: 'C#, Blazor, PostgreSQL, Git, Docker',
     stack: 'C#, Blazor',
-    participantsCount: 3
+    participantsCount: 3,
+    isCustom: false // Предопределенный проект
   },
   {
     title: '#3 Виртуальный консультант работник',
@@ -155,7 +166,8 @@ const projects = ref<Project[]>([
     expectedResult: 'Повышение доступности информации',
     requiredResources: 'Python, PostgreSQL, Git, Docker',
     stack: 'Python',
-    participantsCount: 2
+    participantsCount: 2,
+    isCustom: false // Предопределенный проект
   },
   {
     title: '#4 Разработка веб приложения "Лига спорта"',
@@ -168,7 +180,8 @@ const projects = ref<Project[]>([
     expectedResult: 'Повышение вовлеченности в спорт',
     requiredResources: 'C++, Javascript, .NET 6.0, MySQL, Docker',
     stack: 'C++, Javascript',
-    participantsCount: 4
+    participantsCount: 4,
+    isCustom: false // Предопределенный проект
   }
 ]);
 
@@ -199,7 +212,8 @@ const selectedProject = ref<Project>({
   expectedResult: '',
   requiredResources: '',
   stack: '',
-  participantsCount: 0
+  participantsCount: 0,
+  isCustom: false
 });
 
 const openCreateProjectDialog = () => {
@@ -240,9 +254,18 @@ const createProject = () => {
     expectedResult: newProject.value.expectedResult,
     requiredResources: newProject.value.requiredResources,
     stack: newProject.value.stack,
-    participantsCount: newProject.value.participantsCount
+    participantsCount: newProject.value.participantsCount,
+    isCustom: true // Пометка, что проект создан пользователем
   });
   closeCreateProjectDialog();
+};
+
+const deleteProject = (project: Project) => {
+  const index = projects.value.findIndex(p => p.title === project.title);
+  if (index !== -1) {
+    projects.value.splice(index, 1);
+    closeProjectDetailsDialog(); // Закрываем диалог после удаления
+  }
 };
 
 const selectCategory = (category: string) => {
