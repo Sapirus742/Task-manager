@@ -64,7 +64,7 @@ module.exports = configure(function (ctx) {
 
       env: {
         API_ENDPOINT: ctx.dev
-          ? 'http://0.0.0.0:3000'
+          ? 'http://localhost:3000'
           : 'https://your-domain.ru',
       },
 
