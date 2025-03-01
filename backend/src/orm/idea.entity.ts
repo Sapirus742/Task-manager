@@ -46,9 +46,9 @@ export class Idea {
     @OneToMany(() => Comments, (comments) => comments.idea)
     comment: Comments[];
 
-    @ManyToOne(() => User, (user) => user.idea_customer, { eager: true, onDelete: 'CASCADE' })
+    @ManyToOne(() => User, (user) => user.idea_customer, { onDelete: 'CASCADE' })
     customer: User;
     
-    @ManyToOne(() => User, (user) => user.idea_initiator, { eager: true, onDelete: 'CASCADE' })
+    @ManyToOne(() => User, (user) => user.idea_initiator, { onDelete: 'CASCADE' })
     initiator: User;
 }

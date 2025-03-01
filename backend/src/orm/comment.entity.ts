@@ -24,9 +24,9 @@ export class Comments {
     @Column()
     grade: string;
 
-    @ManyToOne(() => User, (user) => user.comment, { eager: true, onDelete: 'CASCADE' })
+    @ManyToOne(() => User, (user) => user.comment, { onDelete: 'CASCADE' })
     users: User;
 
-    @ManyToOne(() => Idea, (idea) => idea.comment, { eager: true, onDelete: 'CASCADE' })
+    @ManyToOne(() => Idea, (idea) => idea.comment, { onDelete: 'CASCADE' })
     idea: Idea;
 }

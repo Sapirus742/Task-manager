@@ -54,10 +54,10 @@ export class Project {
     @OneToMany(() => Team, (team) => team.project)
     teams: Team[];
 
-    @ManyToOne(() => User, (user) => user.project_customer, { eager: true, onDelete: 'CASCADE' })
+    @ManyToOne(() => User, (user) => user.project_customer, { onDelete: 'CASCADE' })
     customer: User;
     
-    @ManyToOne(() => User, (user) => user.project_initiator, { eager: true, onDelete: 'CASCADE' })
+    @ManyToOne(() => User, (user) => user.project_initiator, { onDelete: 'CASCADE' })
     initiator: User;
       
 }

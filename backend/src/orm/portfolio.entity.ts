@@ -27,9 +27,9 @@ export class Portfolio {
     @Column({ default: UserCommandStatus.inTeam })
     status: UserCommandStatus;
 
-    @ManyToOne(() => Team, (team) => team.id, { eager: true, onDelete: 'CASCADE' })
+    @ManyToOne(() => Team, (team) => team.id, { onDelete: 'CASCADE' })
     team: Team;
 
-    @ManyToOne(() => User, (user) => user.portfolio, { eager: true, onDelete: 'CASCADE' })
+    @ManyToOne(() => User, (user) => user.portfolio, { onDelete: 'CASCADE' })
     user: User;
 }
