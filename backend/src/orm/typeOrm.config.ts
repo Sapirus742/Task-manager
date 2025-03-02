@@ -21,5 +21,5 @@ export default new DataSource({
   database: configService.get('DB_DATABASE'),
   entities: [User, Team, Comments, Idea, Portfolio, Project],
 
-  migrations: ['dist/src/orm/migrations/*.js'],
+  migrations: ['dist/orm/migrations/*.js'],
 });
