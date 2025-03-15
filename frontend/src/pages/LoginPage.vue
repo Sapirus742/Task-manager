@@ -55,99 +55,48 @@
     </q-card>
   </q-page>
 </template>
-  
-   
-  
-  <script setup lang="ts">
-  
-  import { ref } from 'vue';
-  
-  import { useRouter } from 'vue-router';
-  
-  import * as api from '../api/auth.api';
-  
-  import { useMainStore } from 'src/stores/main-store';
-  
-  import { useQuasar } from 'quasar';
-  
-  // import { storeToRefs } from 'pinia';
-  
-   
-  
-  const router = useRouter();
-  
-  const mainStore = useMainStore();
-  
-  const $q = useQuasar();
-  
-  // let { initAppState } = storeToRefs(mainStore);
-  
-   
-  
-  const login = ref('');
-  
-  const password = ref('');
-  
-   
-  
-  const onLogin = async () => {
-  
-    let response;
-  
-   
-  
-    try {
-  
-      response = await api.login(login.value, password.value);
-  
-   
-  
-    } catch {
-  
-      console.log('Login failed');
-  
-    }
-  
-   
-  
-    console.log('login: ', response);
-  
-   
-  
-    if (response) {
-  
-      // save user into store
-  
-      mainStore.initAppState(response)
-  
-      router.push({ path: '/' })
-  
-    } else {
-  
-      $q.notify({
-  
-        message: 'Войти не удалось',
-  
-        caption: 'Удостоверьтесь в правильности введеного Вами логина и пароля.',
-  
-        color: 'red',
-  
-        icon: 'error'
-  
-      })
-  
-    }
-  
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import * as api from '../api/auth.api';
+import { useMainStore } from 'src/stores/main-store';
+import { useQuasar } from 'quasar';
+
+const router = useRouter();
+const mainStore = useMainStore();
+const $q = useQuasar();
+
+const login = ref('');
+const password = ref('');
+
+const onLogin = async () => {
+  let response;
+
+  try {
+    response = await api.login(login.value, password.value);
+  } catch {
+    console.log('Login failed');
   }
-  
-   
-  
+
+  if (response) {
+    mainStore.initAppState(response);
+    router.push({ path: '/' });
+  } else {
+    $q.notify({
+      message: 'Войти не удалось',
+      caption: 'Удостоверьтесь в правильности введеного Вами логина и пароля.',
+      color: 'red',
+      icon: 'error',
+    });
+  }
+};
+
 const onSignUp = () => {
-  router.push({ path: '/signup' })
-}
-  
+  router.push({ path: '/signup' });
+};
+
 const onForgotPassword = () => {
-  // Логика для восстановления пароля
   console.log('Забыли пароль?');
 };
 </script>
@@ -156,6 +105,7 @@ const onForgotPassword = () => {
 .my-card {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif; /* Применяем шрифт Roboto */
 }
 
 .full-width {

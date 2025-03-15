@@ -12,7 +12,7 @@
         <div class="q-mr-md">
           <q-btn flat label="Проекты" @click="goToProjects" />
           <q-btn flat label="Идеи" @click="goToIdeas" />
-          <q-btn flat label="Команды" @click="goToTeams" />
+          <q-btn flat label="Команды" @click="goToTeams" /> <!-- Обновленная кнопка -->
         </div>
 
         <div>
@@ -24,8 +24,6 @@
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-scroll-area style="height: 100%">
         <div class="q-pa-md">
-          
-
           <!-- Role Selection -->
           <div class="q-mb-md">
             <div class="text-h6">Выберите роль</div>
@@ -61,14 +59,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import SideMenu from 'components/SideMenu.vue'
+import SideMenu from 'components/SideMenu.vue';
 import { useMainStore } from 'src/stores/main-store';
 import { storeToRefs } from 'pinia';
 import * as api from '../api/auth.api';
 import { useRouter } from 'vue-router';
 
 defineOptions({
-  name: 'MainLayout'
+  name: 'MainLayout',
 });
 
 const mainStore = useMainStore();
@@ -82,20 +80,21 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-const onLogout = ()=>{
+const onLogout = () => {
   api.logout();
-  router.push({ path: '/login' })
-}
+  router.push({ path: '/login' });
+};
+
 const goToProjects = () => {
-  router.push({ path: '/projects' });
+  router.push('/projects');
 };
 
 const goToIdeas = () => {
-  router.push({ path: '/ideas' });
+  router.push('/ideas');
 };
 
 const goToTeams = () => {
-  router.push({ path: '/teams' });
+  router.push('/teams'); // Переход на страницу команд
 };
 </script>
 
