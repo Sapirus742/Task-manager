@@ -64,6 +64,7 @@ import { useMainStore } from 'src/stores/main-store';
 import { storeToRefs } from 'pinia';
 import * as api from '../api/auth.api';
 import { useRouter } from 'vue-router';
+import { useMeta } from 'quasar'; // Импортируем useMeta
 
 defineOptions({
   name: 'MainLayout',
@@ -79,6 +80,14 @@ const leftDrawerOpen = ref(false);
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
+
+// Устанавливаем мета-теги и заголовок страницы
+useMeta({
+  title: 'Биржа ВШЦТ', // Заголовок страницы
+  meta: {
+    description: { name: 'description', content: 'Страница Биржи ВШЦТ' }, // Мета-описание
+  },
+});
 
 const onLogout = () => {
   api.logout();

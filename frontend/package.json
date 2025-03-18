@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.0.1",
   "description": "A Quasar Project",
-  "productName": "task-manager",
+  "productName": "Биржа ВШЦТ",
   "author": "my@email.com",
   "private": true,
   "scripts": {

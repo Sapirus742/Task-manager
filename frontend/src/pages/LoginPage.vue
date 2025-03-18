@@ -62,6 +62,7 @@ import { useRouter } from 'vue-router';
 import * as api from '../api/auth.api';
 import { useMainStore } from 'src/stores/main-store';
 import { useQuasar } from 'quasar';
+import { useMeta } from 'quasar'; // Импортируем useMeta
 
 const router = useRouter();
 const mainStore = useMainStore();
@@ -69,6 +70,14 @@ const $q = useQuasar();
 
 const login = ref('');
 const password = ref('');
+
+// Устанавливаем мета-теги и заголовок страницы
+useMeta({
+  title: 'Авторизация', // Заголовок страницы
+  meta: {
+    description: { name: 'description', content: 'Страница авторизации на бирже ВШЦТ' }, // Мета-описание
+  },
+});
 
 const onLogin = async () => {
   let response;
