@@ -1,5 +1,5 @@
-<template>
 
+<template>
   <q-layout view="hHh Lpr fFf">
 
     <q-header elevated>
@@ -55,12 +55,11 @@
 </template>
 
  
-
 <script setup lang="ts">
 
 import { ref } from 'vue';
 
-import SideMenu from 'components/SideMenu.vue'
+//import SideMenu from 'components/SideMenu.vue'
 
 import { useMainStore } from 'src/stores/main-store';
 
@@ -68,7 +67,7 @@ import { storeToRefs } from 'pinia';
 
 import * as api from '../api/auth.api';
 
-import { useRouter } from 'vue-router';
+//import { useRouter } from 'vue-router';
 
  
 
@@ -82,7 +81,7 @@ defineOptions({
 
 const mainStore = useMainStore();
 
-const router = useRouter();
+//const router = useRouter();
 
  
 
@@ -106,7 +105,7 @@ const onLogout = ()=>{
 
   api.logout();
 
-  router.push({ path: '/login' })
+  //router.push({ path: '/login' })
 
 }
 

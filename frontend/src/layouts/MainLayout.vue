@@ -45,8 +45,6 @@
               </q-item>
             </q-list>
           </div>
-
-          <SideMenu />
         </div>
       </q-scroll-area>
     </q-drawer>
@@ -59,7 +57,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import SideMenu from 'components/SideMenu.vue';
 import { useMainStore } from 'src/stores/main-store';
 import { storeToRefs } from 'pinia';
 import * as api from '../api/auth.api';
