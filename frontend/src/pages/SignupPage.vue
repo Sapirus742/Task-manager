@@ -201,7 +201,7 @@ const onSignUp = async () => {
 }
 
 .custom-font {
-  /* font-family: 'Roboto', sans-serif; */
+  font-family: 'Roboto', sans-serif; 
 }
 
 /* Убираем отступы после подсказок */
