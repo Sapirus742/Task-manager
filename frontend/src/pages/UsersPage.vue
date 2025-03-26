@@ -16,6 +16,8 @@
   
   import { onMounted, ref, Ref } from 'vue';
   
+  import TIUUserDataTable from 'src/components/TIUUserDataTable.vue';
+  
   import * as api from '../api/users.api';
   
   import { SecuredUser } from '../../../backend/src/common/types';

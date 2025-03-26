@@ -63,7 +63,7 @@
           label="Подтверждение пароля"
           dense
           outlined
-          class="q-mb-sm custom-font"
+          class="q-mb-sm custom-font1"
           placeholder="**********"
           :rules="[val => val === password || 'Пароли не совпадают']"
           no-error-icon
@@ -98,7 +98,6 @@ import { useQuasar } from 'quasar';
 import * as api from 'src/api/auth.api';
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useMeta } from 'quasar'; // Импортируем useMeta
 
 const router = useRouter();
 const $q = useQuasar();
@@ -126,14 +125,6 @@ const isFormValid = computed(() => {
 const onReturn = () => {
   router.push({ path: '/login' });
 };
-
-// Устанавливаем мета-теги и заголовок страницы
-useMeta({
-  title: 'Авторизация', // Заголовок страницы
-  meta: {
-    description: { name: 'description', content: 'Страница авторизации на бирже ВШЦТ' }, // Мета-описание
-  },
-});
 
 const onSignUp = async () => {
   if (!isFormValid.value) {
@@ -202,6 +193,11 @@ const onSignUp = async () => {
 
 .custom-font {
   font-family: 'Roboto', sans-serif; 
+}
+
+.custom-font1 {
+  position: relative;
+  top: 9px;
 }
 
 /* Убираем отступы после подсказок */

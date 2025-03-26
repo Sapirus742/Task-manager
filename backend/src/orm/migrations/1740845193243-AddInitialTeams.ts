@@ -16,5 +16,4 @@ export class AddInitialTeams1740845193243 implements MigrationInterface {
             DELETE FROM "team" WHERE name IN ('Team Alpha', 'Team Beta')
         `);
     }
-
 }

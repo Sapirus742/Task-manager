@@ -15,7 +15,7 @@
           dense
           outlined
           class="q-mb-md"
-          placeholder="almamun_uxui@std.tyulu.ru"
+          placeholder="example_mail@std.tyulu.ru"
         />
         <q-input
           type="password"
@@ -62,7 +62,6 @@ import { useRouter } from 'vue-router';
 import * as api from '../api/auth.api';
 import { useMainStore } from 'src/stores/main-store';
 import { useQuasar } from 'quasar';
-import { useMeta } from 'quasar'; // Импортируем useMeta
 
 const router = useRouter();
 const mainStore = useMainStore();
@@ -70,14 +69,6 @@ const $q = useQuasar();
 
 const login = ref('');
 const password = ref('');
-
-// Устанавливаем мета-теги и заголовок страницы
-useMeta({
-  title: 'Авторизация', // Заголовок страницы
-  meta: {
-    description: { name: 'description', content: 'Страница авторизации на бирже ВШЦТ' }, // Мета-описание
-  },
-});
 
 const onLogin = async () => {
   let response;
@@ -94,7 +85,7 @@ const onLogin = async () => {
   } else {
     $q.notify({
       message: 'Войти не удалось',
-      caption: 'Удостоверьтесь в правильности введеного Вами логина и пароля.',
+      caption: 'Удостоверьтесь в правильности введеного ВАМИ логина и пароля.',
       color: 'red',
       icon: 'error',
     });
@@ -107,6 +98,9 @@ const onSignUp = () => {
 
 const onForgotPassword = () => {
   console.log('Забыли пароль?');
+  $q.notify({
+    message: 'Попробуйте вспомнить пароль',
+  })
 };
 </script>
 

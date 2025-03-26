@@ -6,7 +6,6 @@ import {
   ManyToOne,
   OneToMany,
   OneToOne,
-  JoinColumn,
 } from 'typeorm';   
 
 import { Team } from './team.entity';
@@ -73,15 +72,9 @@ export class User {
   @OneToMany(() => Idea, (idea) => idea.initiator)
   idea_initiator: Idea[];
 
-  @OneToMany(() => Idea, (idea) => idea.customer)
-  idea_customer: Idea[];
-
   @OneToMany(() => Project, (project) => project.initiator)
   project_initiator: Project[];
-
-  @OneToMany(() => Project, (project) => project.customer)
-  project_customer: Project[];
-
+  
   @OneToMany(() => Comments, (comment) => comment.users)
   comment: Comments[];
 
@@ -94,8 +87,16 @@ export class User {
       email: this.email,
       firstname: this.firstname,
       lastname: this.lastname,
+      group: this.group,
+      telephone: this.telephone,
       roles: this.roles,
       status: this.status,
+      competence: this.competence,
+      team_leader: this.team_leader.getTeamDto(),
+      team_owner: this.team_owner.map(team_owner => team_owner.getTeamDto()),
+      portfolio: this.portfolio.map(portfolio => portfolio.getPortfolioDto()),
+      project_initiator: this.project_initiator.map(project_initiator => project_initiator.getProjectDto()),
+      team: this.team.getTeamDto(),
     };
   }
 }
