@@ -185,6 +185,7 @@
         <q-btn 
           v-if="mainStore.canEditTeam(selectedTeam)"
           flat 
+          :disable="true"
           label="Редактировать" 
           color="primary" 
           @click="openEditTeamDialog(selectedTeam)" 
