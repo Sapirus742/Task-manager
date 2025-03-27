@@ -1,18 +1,18 @@
 <template>
   <q-dialog v-model="showDialog" persistent>
-    <q-card class="create-project-dialog">
-      <q-card-section>
-        <div class="text-h6">Создать новый проект</div>
-      </q-card-section>
+    <q-card class="create-project-dialog bg-grey-2 q-pa-md">
+      <q-card-section class="text-h6 text-primary">Создать новый проект</q-card-section>
 
       <q-card-section>
         <!-- Форма для ввода данных -->
-        <q-form @submit="onSubmit">
+        <q-form @submit="onSubmit" class="q-gutter-md">
           <!-- Название проекта -->
           <q-input
             v-model="newProject.name"
             label="Название проекта"
             :rules="[(val) => !!val || 'Поле обязательно']"
+            outlined
+            dense
           />
 
           <!-- Проблема -->
@@ -20,6 +20,8 @@
             v-model="newProject.problem"
             label="Проблема"
             :rules="[(val) => !!val || 'Поле обязательно']"
+            outlined
+            dense
           />
 
           <!-- Решение -->
@@ -27,6 +29,8 @@
             v-model="newProject.solution"
             label="Решение"
             :rules="[(val) => !!val || 'Поле обязательно']"
+            outlined
+            dense
           />
 
           <!-- Результат -->
@@ -34,6 +38,8 @@
             v-model="newProject.result"
             label="Результат"
             :rules="[(val) => !!val || 'Поле обязательно']"
+            outlined
+            dense
           />
 
           <!-- Ресурсы -->
@@ -41,6 +47,8 @@
             v-model="newProject.resource"
             label="Ресурсы"
             :rules="[(val) => !!val || 'Поле обязательно']"
+            outlined
+            dense
           />
 
           <!-- Стек технологий -->
@@ -51,6 +59,8 @@
             multiple
             use-chips
             :rules="[(val) => val.length > 0 || 'Выберите хотя бы одну технологию']"
+            outlined
+            dense
           />
 
           <!-- Статус проекта -->
@@ -59,6 +69,8 @@
             label="Статус проекта"
             :options="statusOptions"
             :rules="[(val) => !!val || 'Поле обязательно']"
+            outlined
+            dense
           />
 
           <!-- Дата начала проекта -->
@@ -66,10 +78,9 @@
             v-model="startProjectString"
             label="Дата начала проекта"
             type="date"
-            :rules="[
-              (val) => !!val || 'Поле обязательно',
-              (val) => isValidDate(val) || 'Некорректная дата'
-            ]"
+            :rules="[(val) => !!val || 'Поле обязательно']"
+            outlined
+            dense
           />
 
           <!-- Дата окончания проекта -->
@@ -77,19 +88,19 @@
             v-model="stopProjectString"
             label="Дата окончания проекта"
             type="date"
-            :rules="[
-              (val) => !!val || 'Поле обязательно',
-              (val) => isValidDate(val) || 'Некорректная дата',
-              (val) => isAfterStartDate(val) || 'Должна быть после даты начала'
-            ]"
+            :rules="[(val) => !!val || 'Поле обязательно']"
+            outlined
+            dense
           />
 
           <!-- Максимальное количество участников -->
           <q-input
             v-model="newProject.maxUsers"
             label="Максимальное количество участников"
-            type="text"
+            type="number"
             :rules="[(val) => !!val || 'Поле обязательно']"
+            outlined
+            dense
           />
 
           <!-- Заказчик -->
@@ -97,6 +108,8 @@
             v-model="newProject.customer"
             label="Заказчик"
             :rules="[(val) => !!val || 'Поле обязательно']"
+            outlined
+            dense
           />
 
           <!-- Кнопки -->
@@ -112,12 +125,9 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { Competence, CreateProjectDto, StatusProject } from '../../../backend/src/common/types';
+import { Competence, CreateProjectDto, StatusProject } from '../../../../backend/src/common/types';
 import { create } from 'src/api/project.api'; // Импортируем метод для создания проекта
 import { useMainStore } from 'src/stores/main-store'; // Импортируем хранилище
-import { date } from 'quasar';
-
-const { formatDate} = date;
 
 // Пропсы и эмиты
 const emit = defineEmits(['create']);
@@ -139,36 +149,25 @@ const newProject = ref<CreateProjectDto>({
   status: StatusProject.searchTeam, // Статус проекта
   startProject: new Date(), // Дата начала проекта (тип Date)
   stopProject: new Date(), // Дата окончания проекта (тип Date)
-  maxUsers: '1', // По умолчанию строка '1'
+  maxUsers: '', // По умолчанию число 1
   customer: '',
   initiator: mainStore.userId, // Используем ID залогиненного пользователя
 });
 
 // Строковые представления дат для v-model
 const startProjectString = computed({
-  get: () => formatDate(newProject.value.startProject, 'YYYY-MM-DD'),
+  get: () => newProject.value.startProject.toISOString().split('T')[0],
   set: (value) => {
-    const [year, month, day] = value.split('-').map(Number);
-    newProject.value.startProject = new Date(year, month - 1, day);
+    newProject.value.startProject = new Date(value);
   },
 });
 
 const stopProjectString = computed({
-  get: () => formatDate(newProject.value.stopProject, 'YYYY-MM-DD'),
+  get: () => newProject.value.stopProject.toISOString().split('T')[0],
   set: (value) => {
-    const [year, month, day] = value.split('-').map(Number);
-    newProject.value.stopProject = new Date(year, month - 1, day);
+    newProject.value.stopProject = new Date(value);
   },
 });
-
-const isValidDate = (dateString: string) => {
-  return !isNaN(new Date(dateString).getTime());
-};
-
-const isAfterStartDate = (endDateString: string) => {
-  const endDate = new Date(endDateString);
-  return endDate >= newProject.value.startProject;
-};
 
 // Опции для стека технологий
 const competenceOptions = Object.values(Competence);
@@ -189,13 +188,7 @@ const closeDialog = () => {
 // Отправка формы
 const onSubmit = async () => {
   try {
-    // Проверяем, что дата окончания не раньше даты начала
-    if (newProject.value.stopProject < newProject.value.startProject) {
-      console.error('Дата окончания не может быть раньше даты начала');
-      return;
-    }
-
-    // Проверяем остальные обязательные поля
+    // Проверяем, что все обязательные поля заполнены
     if (
       !newProject.value.name ||
       !newProject.value.problem ||
@@ -211,17 +204,16 @@ const onSubmit = async () => {
       return;
     }
 
-    // Создаем копию объекта без реактивности
+    // Отправляем данные на сервер
     const projectData: CreateProjectDto = {
       ...newProject.value,
-      startProject: new Date(newProject.value.startProject),
-      stopProject: new Date(newProject.value.stopProject),
     };
 
     const createdProject = await create(projectData);
     if (createdProject) {
+      // Оповещаем родительский компонент о создании проекта
       emit('create', createdProject);
-      closeDialog();
+      closeDialog(); // Закрываем диалог после успешного создания
     }
   } catch (error) {
     console.error('Ошибка при создании проекта:', error);

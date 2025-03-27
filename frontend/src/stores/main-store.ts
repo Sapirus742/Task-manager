@@ -67,6 +67,24 @@ export const useMainStore = defineStore('main', () => {
     return isAdmin() || isCustomer() || isDirectorate();
   };
 
+  // Проверка возможности удаления проекта
+  const canDeleteProject = (project?: ProjectDto) => {
+    // Если проект не передан, возвращаем false
+    if (!project) return false;
+    
+    // Админ или директорат могут удалять любые проекты
+    if (isAdmin() || isDirectorate()) {
+      return true;
+    }
+    
+    // Customer может удалять только свои проекты
+    if (isCustomer() && project.initiator.id === state.userId) {
+      return true;
+    }
+    
+    return false;
+  };
+
   const canCreateTeam = () => {
     return isAdmin() || isDirectorate();
   };
@@ -99,5 +117,6 @@ export const useMainStore = defineStore('main', () => {
     getCurrentUser,
     canEditTeam,
     canDeleteTeam,
+    canDeleteProject,
   };
 });
