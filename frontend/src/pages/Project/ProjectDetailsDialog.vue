@@ -46,93 +46,84 @@
 
             <!-- Вкладка с информацией о команде -->
             <q-tab-panel name="team">
-              <div class="team-section panel-content">
-                <h3 class="text-subtitle1 text-weight-bold q-mb-xs">Команда проекта</h3>
-                
-                <template v-if="currentTeam">
-                  <!-- Название команды и статус -->
-                  <div class="team-name q-mb-md">
-                    <q-icon name="groups" class="q-mr-sm" />
-                    <strong>Команда:</strong> {{ currentTeam.name }}
-                    <q-chip size="sm" :color="currentTeam.privacy === 'Close' ? 'negative' : 'positive'" text-color="white">
-                      {{ currentTeam.privacy === 'Close' ? 'Закрытая' : 'Открытая' }}
-                    </q-chip>
-                    <q-chip size="sm" color="info" text-color="white">
-                      {{ currentTeam.status }}
-                    </q-chip>
-                  </div>
-                  
-                  <!-- Описание команды -->
-                  <div v-if="currentTeam.description" class="q-mb-md">
-                    <h4 class="text-subtitle2 text-weight-bold q-mb-xs">Описание команды:</h4>
-                    <p>{{ currentTeam.description }}</p>
-                  </div>
+  <div class="team-section panel-content">
+    <h3 class="text-subtitle1 text-weight-bold q-mb-xs">Команда проекта</h3>
+    
+    <template v-if="currentTeam">
+      <!-- Название команды и статус -->
+      <div class="team-name q-mb-md">
+        <q-icon name="groups" class="q-mr-sm" />
+        <strong>Команда:</strong> {{ currentTeam.name }}
+        <q-chip size="sm" :color="currentTeam.privacy === 'Close' ? 'negative' : 'positive'" text-color="white">
+          {{ currentTeam.privacy === 'Close' ? 'Закрытая' : 'Открытая' }}
+        </q-chip>
+        <q-chip size="sm" color="info" text-color="white">
+          {{ currentTeam.status }}
+        </q-chip>
+      </div>
+      
+      <!-- Описание команды -->
+      <div v-if="currentTeam.description" class="q-mb-md">
+        <h4 class="text-subtitle2 text-weight-bold q-mb-xs">Описание команды:</h4>
+        <p>{{ currentTeam.description }}</p>
+      </div>
 
-                  <!-- Владелец команды -->
-                  <div class="q-mb-md">
-                    <h4 class="text-subtitle2 text-weight-bold q-mb-xs">Владелец команды:</h4>
-                    <div class="member-item owner row items-center q-pa-xs">
-                      <div class="col">
-                        <span class="text-weight-medium">
-                          {{ currentTeam.user_owner?.firstname }} {{ currentTeam.user_owner?.lastname }}
-                        </span>
-                        <q-badge color="teal" class="q-ml-sm">Владелец</q-badge>
-                      </div>
-                      <div v-if="currentTeam.user_owner?.email" class="col-auto text-caption text-grey">
-                        {{ currentTeam.user_owner.email }}
-                      </div>
-                    </div>
-                  </div>
+      <!-- Участники команды (показываем только если есть участники) -->
+      <template v-if="currentTeam.user?.length > 0 || currentTeam.user_leader">
+        <div class="members-container q-pa-sm bg-grey-2 rounded-borders q-mb-md">
+          <!-- Владелец команды -->
+          <div class="member-item owner row items-center q-mb-xs" v-if="currentTeam.user_owner">
+            <div class="col">
+              <span class="text-weight-medium">
+                {{ currentTeam.user_owner.firstname }} {{ currentTeam.user_owner.lastname }}
+              </span>
+              <q-badge color="teal" class="q-ml-sm">Владелец</q-badge>
+            </div>
+            <div v-if="currentTeam.user_owner.email" class="col-auto text-caption text-grey">
+              {{ currentTeam.user_owner.email }}
+            </div>
+          </div>
 
-                  <!-- Участники команды -->
-                  <div>
-                    <h4 class="text-subtitle2 text-weight-bold q-mb-xs">Участники команды:</h4>
-                    <div class="members-container q-pa-sm bg-grey-2 rounded-borders">
-                      <!-- Тимлид -->
-                      <div 
-                        v-if="teamLeader && teamLeader.id !== currentTeam.user_owner?.id" 
-                        class="member-item leader row items-center q-mb-xs"
-                      >
-                        <div class="col">
-                          <span class="text-weight-medium">
-                            {{ teamLeader.firstname }} {{ teamLeader.lastname }}
-                          </span>
-                          <q-badge color="primary" class="q-ml-sm">Тимлид</q-badge>
-                        </div>
-                        <div v-if="teamLeader.email" class="col-auto text-caption text-grey">
-                          {{ teamLeader.email }}
-                        </div>
-                      </div>
-                      
-                      <!-- Остальные участники -->
-                      <template v-if="teamMembers.length > 0">
-                        <div 
-                          v-for="member in teamMembers" 
-                          :key="member.id" 
-                          class="member-item row items-center q-mb-xs"
-                        >
-                          <div class="col">
-                            <span>{{ member.firstname }} {{ member.lastname }}</span>
-                          </div>
-                          <div v-if="member.email" class="col-auto text-caption text-grey">
-                            {{ member.email }}
-                          </div>
-                        </div>
-                      </template>
-                      
-                      <div v-if="teamMembers.length === 0 && (!teamLeader || teamLeader.id === currentTeam.user_owner?.id)" class="text-grey">
-                        Нет участников в команде
-                      </div>
-                    </div>
-                  </div>
-                </template>
-                
-                <div v-else class="text-grey">
-                  Команда еще не сформирована
-                </div>
+          <!-- Тимлид (если не владелец) -->
+          <div 
+            v-if="teamLeader && teamLeader.id !== currentTeam.user_owner?.id"
+            class="member-item leader row items-center q-mb-xs"
+          >
+            <div class="col">
+              <span class="text-weight-medium">
+                {{ teamLeader.firstname }} {{ teamLeader.lastname }}
+              </span>
+              <q-badge color="primary" class="q-ml-sm">Тимлид</q-badge>
+            </div>
+            <div v-if="teamLeader.email" class="col-auto text-caption text-grey">
+              {{ teamLeader.email }}
+            </div>
+          </div>
+
+          <!-- Остальные участники -->
+          <template v-if="teamMembers.length > 0">
+            <div 
+              v-for="member in teamMembers" 
+              :key="member.id" 
+              class="member-item row items-center q-mb-xs"
+            >
+              <div class="col">
+                <span>{{ member.firstname }} {{ member.lastname }}</span>
               </div>
-            </q-tab-panel>
-
+              <div v-if="member.email" class="col-auto text-caption text-grey">
+                {{ member.email }}
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+    </template>
+    
+    <div v-else class="text-grey">
+      Команда еще не сформирована
+    </div>
+  </div>
+</q-tab-panel>
             <!-- Вкладка с техническими деталями -->
             <q-tab-panel name="details">
               <div class="details-section panel-content">

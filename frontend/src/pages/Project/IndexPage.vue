@@ -72,7 +72,7 @@ const addProject = (newProject: ProjectDto) => {
 };
 
 const openProjectDetails = (project: ProjectDto) => {
-  projectDetailsDialog.value?.open(project);
+  projectDetailsDialog.value.open(project);
 };
 
 const confirmDelete = (projectId: number) => {
