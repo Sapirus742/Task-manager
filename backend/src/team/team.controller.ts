@@ -34,6 +34,12 @@ export class TeamController {
   async findOne(@Param('id') id: number): Promise<Team> {
     return this.teamService.findOne(id);
   }
+
+  @Get('by-project/:projectId')
+  async findByProjectId(@Param('projectId') projectId: number): Promise<Team | null> {
+    return this.teamService.findByProjectId(projectId);
+  }
+
   
   @Post()
   @Roles(Role.admin, Role.customer, Role.directorate)

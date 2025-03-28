@@ -17,6 +17,19 @@ export async function get(id: number): Promise<TeamDto | undefined> {
   return;
 }
 
+export async function getTeamByProjectId(projectId: number): Promise<TeamDto | undefined> {
+  try {
+    const response = await api.get(`/team/by-project/${projectId}`);
+    if (response.status === 200) {
+      return response.data;
+    }
+    return undefined;
+  } catch (error) {
+    console.error('Error fetching team by project ID:', error);
+    return undefined;
+  }
+}
+
 export async function create(
   newTeam: CreateTeamDto
 ): Promise<TeamDto | undefined> {

@@ -19,15 +19,23 @@ export class TeamService {
   ) {}
 
   async findAll(): Promise<Team[]> {
-    return this.teamRepository.find({ relations: ['user_leader', 'user', 'portfolio', 'project', 'user_owner'] });
+    return this.teamRepository.find({ 
+      relations: ['user_leader', 'user', 'portfolio', 'project', 'user_owner'] 
+    });
   }
   
   async findOne(id: number): Promise<Team | any> {
-    const project = await this.teamRepository.findOne({
+    return this.teamRepository.findOne({
       where: { id },
       relations: ['user_leader', 'user', 'portfolio', 'project', 'user_owner'],
     });
-    return project;
+  }
+
+  async findByProjectId(projectId: number): Promise<Team | null> {
+    return this.teamRepository.findOne({
+      where: { project: { id: projectId } },
+      relations: ['user_leader', 'user', 'user_owner', 'project'],
+    });
   }
   
   async create(
